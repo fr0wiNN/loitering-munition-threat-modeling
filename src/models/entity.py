@@ -3,6 +3,3 @@ class Entity:
         self.name = name
         self.x = x
         self.y = y
-
-    def get_name(self):
-        return self.name

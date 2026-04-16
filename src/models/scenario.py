@@ -14,15 +14,6 @@ class Scenario:
         self.threats: List[Threat] = []
         self.weapons: List[Weapon] = []
 
-    def get_name(self):
-        return self.name
-
-    def get_width(self):
-        return self.width
-
-    def get_height(self):
-        return self.height
-
     def add_assets(self, *assets: Asset):
         self.assets.extend(assets)
 
@@ -31,15 +22,6 @@ class Scenario:
 
     def add_weapons(self, *weapons: Weapon):
         self.weapons.extend(weapons)
-
-    def get_assets(self):
-        return self.assets
-
-    def get_threats(self):
-        return self.threats
-
-    def get_weapons(self):
-        return self.weapons
 
     def details(self) -> str:
         return (f"Scenario: {self.name}\n"

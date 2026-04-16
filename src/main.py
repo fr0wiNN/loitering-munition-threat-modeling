@@ -23,8 +23,8 @@ if __name__ == '__main__':
     print(scenario.details())
 
     # === PRINT ALL THE THREATS AND THEIR TARGETS ===
-    for d in scenario.get_threats():
-        print(f"[{d.get_name()}] is targeting [{d.get_target().get_name()}] worth {d.get_target().get_value()}$")
+    for d in scenario.threats:
+        print(f"[{d.name}] is targeting [{d.target.name}] worth {d.target.name}$")
 
     # === VISUALIZE ===
     plot_scenario(scenario)

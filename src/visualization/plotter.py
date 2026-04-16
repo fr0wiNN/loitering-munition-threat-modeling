@@ -5,10 +5,10 @@ ICON_SIZE = 60
 
 def plot_scenario(scenario: Scenario):
     plt.figure(figsize=(10, 6))
-    plt.title(f"Scenario: {scenario.get_name()}")
+    plt.title(f"Scenario: {scenario.name}")
 
-    plt.xlim(0, scenario.get_width())
-    plt.ylim(0, scenario.get_height())
+    plt.xlim(0, scenario.width)
+    plt.ylim(0, scenario.height)
 
     for asset in scenario.assets:
         plt.scatter(asset.x, asset.y, color='blue', marker='s', s=ICON_SIZE, label='Asset')
