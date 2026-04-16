@@ -17,6 +17,12 @@ class Scenario:
     def get_name(self):
         return self.name
 
+    def get_width(self):
+        return self.width
+
+    def get_height(self):
+        return self.height
+
     def add_assets(self, *assets: Asset):
         self.assets.extend(assets)
 
