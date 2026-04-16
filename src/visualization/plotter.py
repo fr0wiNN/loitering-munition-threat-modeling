@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from models import Scenario
 
-ICON_SIZE = 60
+ICON_SIZE = 20
 
 def plot_scenario(scenario: Scenario):
     plt.figure(figsize=(10, 6))
@@ -25,6 +25,7 @@ def plot_scenario(scenario: Scenario):
         plt.scatter(weapon.x, weapon.y, color='green', marker='^', s=ICON_SIZE, label='Weapon')
         plt.text(weapon.x, weapon.y + 5, weapon.name, fontsize=9, ha='center')
 
+    # Remove duplicate labels in the legend
     handles, labels = plt.gca().get_legend_handles_labels()
     by_label = dict(zip(labels, handles))
     plt.legend(by_label.values(), by_label.keys(), loc='upper right')
