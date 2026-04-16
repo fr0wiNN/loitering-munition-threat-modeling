@@ -14,6 +14,9 @@ class Scenario:
         self.threats: List[Threat] = []
         self.weapons: List[Weapon] = []
 
+    def get_name(self):
+        return self.name
+
     def add_assets(self, *assets: Asset):
         self.assets.extend(assets)
 
