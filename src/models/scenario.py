@@ -25,7 +25,7 @@ class Scenario:
 
     def details(self) -> str:
         return (f"Scenario: {self.name}\n"
-                f"Size: ({self.width}x{self.height})\n"
+                f"Size: ({self.width} x {self.height})\n"
                 f"Assets: {len(self.assets)}\n"
                 f"Threats: {len(self.threats)}\n"
                 f"Weapons: {len(self.weapons)}\n")
