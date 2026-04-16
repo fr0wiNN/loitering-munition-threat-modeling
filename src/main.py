@@ -1,5 +1,6 @@
 from models import Asset, Threat, Weapon, Scenario
 from visualization import plot_scenario
+from models.weapon_collection import Patriot, Strela
 
 if __name__ == '__main__':
     # === INITIALIZE SCENARIO ===
@@ -12,19 +13,20 @@ if __name__ == '__main__':
     drone_1 = Threat(name="SHA-136-1", x=100.0, y=150.0, target=hq_1)
     drone_2 = Threat(name="SHA-136-2", x=115.0, y=130.0, target=hq_2)
 
-    patriot = Weapon(name="MIM-104-1", x=250.0, y=25)
+    patriot = Patriot(x=250.0, y=25)
+    strela = Strela(x=220.0, y=20)
 
     # === PACK ENTITIES INTO SCENARIO ===
     scenario.add_assets(hq_1, hq_2)
     scenario.add_threats(drone_1, drone_2)
-    scenario.add_weapons(patriot)
+    scenario.add_weapons(patriot, strela)
 
     # === PRINT SCENARIO DETAILS ===
     print(scenario.details())
 
     # === PRINT ALL THE THREATS AND THEIR TARGETS ===
     for d in scenario.threats:
-        print(f"[{d.name}] is targeting [{d.target.name}] worth {d.target.name}$")
+        print(f"[{d.name}] is targeting [{d.target.name}] worth {d.value}$")
 
     # === VISUALIZE ===
     plot_scenario(scenario)
