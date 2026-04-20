@@ -1,4 +1,5 @@
-from models import Asset, Threat, Weapon, Scenario
+from scenario import Scenario
+from models import Asset, Threat
 from visualization import plot_scenario
 from models.weapon_collection import Patriot, Strela
 

@@ -1,7 +1,7 @@
 from typing import List
-from .asset import Asset
-from .threat import Threat
-from .weapon import Weapon
+from models.asset import Asset
+from models.threat import Threat
+from models.weapon import Weapon
 
 
 class Scenario:
