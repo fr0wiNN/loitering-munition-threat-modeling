@@ -11,9 +11,9 @@ class Patriot(Weapon):
             name=f"MIM-104",
             x=x,
             y=y,
-            usage_cost=4_000_000.0,
+            usage_cost=100_000.0,
             kill_prob=0.85,
-            engage_range=160.0,
+            engage_range=200.0,
             capacity=4
         )
 
@@ -30,6 +30,6 @@ class Strela(Weapon):
             y=y,
             usage_cost=60_000.0,
             kill_prob=0.55,
-            engage_range=5.0,
+            engage_range=5.00,
             capacity=4
         )
