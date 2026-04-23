@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Tuple, Dict
+from typing import List, Tuple
 from models import Weapon, Threat
 from scenario import Scenario
 
