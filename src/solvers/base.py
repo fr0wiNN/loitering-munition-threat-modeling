@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Tuple, Dict
-from models import Scenario, Weapon, Threat
+from models import Weapon, Threat
+from scenario import Scenario
 
 
 class SolverResult:
