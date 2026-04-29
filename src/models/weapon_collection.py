@@ -6,9 +6,9 @@ class Patriot(Weapon):
     # NATO code name: MIM-104 Patriot
     # Interceptor: PAC-2
     # https://en.wikipedia.org/wiki/MIM-104_Patriot
-    def __init__(self, x: float, y: float):
+    def __init__(self, x: float, y: float, name: str):
         super().__init__(
-            name=f"MIM-104",
+            name=name,
             x=x,
             y=y,
             usage_cost=100_000.0,
@@ -23,9 +23,10 @@ class Strela(Weapon):
     # NATO code name: SA-13 "Gopher"
     # Interceptor: 9M333
     # https://en.wikipedia.org/wiki/9K35_Strela-10
-    def __init__(self, x: float, y: float):
+    NAME = "SA-13"
+    def __init__(self, x: float, y: float, name: str):
         super().__init__(
-            name=f"SA-13",
+            name=name,
             x=x,
             y=y,
             usage_cost=60_000.0,

@@ -37,17 +37,17 @@ def plot_scenario(scenario: Scenario, assignments = None, display_range: bool = 
             )
             plt.gca().add_patch(range_circle)
 
-
-    for weapon, threat in assignments:
-        plt.plot(
-            [weapon.x, threat.x],
-            [weapon.y, threat.y],
-            color='blue',
-            linestyle='-',
-            alpha=0.5,
-            linewidth=1.0,
-            label='Engagement'
-        )
+    if assignments is not None:
+        for weapon, threat in assignments:
+            plt.plot(
+                [weapon.x, threat.x],
+                [weapon.y, threat.y],
+                color='blue',
+                linestyle='-',
+                alpha=0.5,
+                linewidth=1.0,
+                label='Engagement'
+            )
 
     # Remove duplicate labels in the legend
     handles, labels = plt.gca().get_legend_handles_labels()
