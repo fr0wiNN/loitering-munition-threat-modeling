@@ -25,7 +25,7 @@ class GreedyMMRSolver(BaseSolver):
                     continue
 
                 for t in scenario.threats:
-                    if w.is_in_range(t):
+                    if not w.is_in_range(t):
                         continue
 
                     expected_value_saved = t.value * threat_survival_probs[t] * w.kill_prob
