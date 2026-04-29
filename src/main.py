@@ -2,6 +2,7 @@ from scenario import Scenario
 from models import Asset, Threat
 from visualization import plot_scenario
 from models.weapon_collection import Patriot, Strela
+from solvers.greedy import GreedyMMRSolver
 
 if __name__ == '__main__':
     # === INITIALIZE SCENARIO ===
@@ -25,9 +26,14 @@ if __name__ == '__main__':
     # === PRINT SCENARIO DETAILS ===
     print(scenario.details())
 
-    # === PRINT ALL THE THREATS AND THEIR TARGETS ===
-    for d in scenario.threats:
-        print(f"[{d.name}] is targeting [{d.target.name}] worth {d.value}$")
+    # === SOLVE AND PRINT THE METRICS ===
+    greedy_solver = GreedyMMRSolver()
+    result = greedy_solver.solve(scenario)
+
+    print("=== GREEDY SOLVER RESULTS ===")
+    print(f"Total Cost: ${result.total_engagement_cost:,.2f}")
+    print(f"Asset Loss: ${result.expected_asset_loss:,.2f}")
+    print(f"Compute Time: {result.execution_time_seconds:.4f}s")
 
     # === VISUALIZE ===
-    plot_scenario(scenario)
+    plot_scenario(scenario, assignments=result.assignments, display_range=True)
