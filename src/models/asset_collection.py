@@ -9,3 +9,13 @@ class HQ(Asset):
             y=y,
             value=500_000
         )
+
+class OilRefinery(Asset):
+    # Oil Refinery
+    def __init__(self, x: float, y: float, name: str):
+        super().__init__(
+            name=name,
+            x=x,
+            y=y,
+            value=1_500_000
+        )
