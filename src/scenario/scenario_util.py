@@ -1,8 +1,7 @@
 import random
 from typing import Type
-from models import Asset, Threat, Entity
+from models import Asset, Threat
 from models.weapon import Weapon
-from models.weapon_collection import Patriot
 
 
 class ScenarioGenerator:
@@ -10,8 +9,7 @@ class ScenarioGenerator:
         if seed is not None:
             random.seed(seed)
 
-    def generate_weapon_cluster(self, center_x: float, center_y: float, radius: float, amount: int,
-                                weapon_class: Type[Weapon]) -> list:
+    def generate_weapon_cluster(self, center_x: float, center_y: float, radius: float, amount: int, weapon_class: Type[Weapon]) -> list[Weapon]:
         cluster = []
         for i in range(amount):
             offset_x = random.uniform(-radius, radius)
@@ -27,7 +25,7 @@ class ScenarioGenerator:
 
         return cluster
 
-    def generate_asset_cluster(self, center_x: float, center_y: float, radius: float, amount: int, asset_class: Type[Asset]) -> list:
+    def generate_asset_cluster(self, center_x: float, center_y: float, radius: float, amount: int, asset_class: Type[Asset]) -> list[Asset]:
 
         cluster = []
         for i in range(amount):
@@ -44,5 +42,22 @@ class ScenarioGenerator:
 
         return cluster
 
-    def create_threat_cluster(self):
-        pass
+    def generate_threat_cluster(self, center_x: float, center_y: float, radius: float, amount: int, threat_class: Type[Threat], target_pool: list[Asset]) -> list[Threat]:
+
+        cluster = []
+        for i in range(amount):
+            offset_x = random.uniform(-radius, radius)
+            offset_y = random.uniform(-radius, radius)
+
+            assigned_target = random.choice(target_pool)
+
+            threat = threat_class(
+                x=center_x + offset_x,
+                y=center_y + offset_y,
+                target=assigned_target,
+                name=f"{threat_class.__name__}-{i}"
+            )
+
+            cluster.append(threat)
+
+        return cluster

@@ -6,7 +6,7 @@ from solvers.base import SolverResult
 ICON_SIZE = 20
 FONT_SIZE = 7
 
-def plot_scenario(scenario: Scenario, assignments = None, display_range: bool = False):
+def plot_scenario(scenario: Scenario, assignments = None, display_range: bool = False, display_targeting:bool = False):
     plt.figure(figsize=(10, 6))
     plt.title(f"Scenario: {scenario.name}")
 
@@ -21,6 +21,17 @@ def plot_scenario(scenario: Scenario, assignments = None, display_range: bool = 
         plt.scatter(threat.x, threat.y, color='red', marker='o', s=ICON_SIZE, label='Threat')
         plt.text(threat.x, threat.y + 5, threat.name, fontsize=FONT_SIZE, ha='center')
 
+        if display_targeting:
+            plt.plot(
+                [threat.x, threat.target.x],
+                [threat.y, threat.target.y],
+                color='red',
+                linestyle=':',
+                alpha=0.4,
+                linewidth=1.0,
+                label='Threat Targeting'
+            )
+
     for weapon in scenario.weapons:
         plt.scatter(weapon.x, weapon.y, color='green', marker='^', s=ICON_SIZE, label='Weapon')
         plt.text(weapon.x, weapon.y + 5, weapon.name, fontsize=FONT_SIZE, ha='center')
@@ -30,10 +41,10 @@ def plot_scenario(scenario: Scenario, assignments = None, display_range: bool = 
                 (weapon.x, weapon.y),
                 radius=weapon.engage_range,
                 color='green',
-                fill=True,
-                alpha=0.1,
-                linestyle='--',
-                linewidth=1.5
+                fill=False,
+                alpha=1,
+                linestyle='-',
+                linewidth=0.2
             )
             plt.gca().add_patch(range_circle)
 
