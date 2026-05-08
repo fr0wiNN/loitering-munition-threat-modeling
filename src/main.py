@@ -12,7 +12,6 @@ if __name__ == '__main__':
     generator = ScenarioGenerator()
 
     # === CREATE ENTITIES ===
-
     weapons = generator.generate_weapon_cluster(
         center_x=250.0,
         center_y=40.0,
@@ -58,8 +57,6 @@ if __name__ == '__main__':
         threat_class=SHA,
         target_pool=assets_2
     )
-
-    threats_2 = []
 
     # === PACK ENTITIES INTO SCENARIO ===
     scenario.add_assets(*assets_1, *assets_2)
