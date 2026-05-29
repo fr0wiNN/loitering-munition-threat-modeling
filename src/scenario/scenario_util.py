@@ -1,7 +1,11 @@
 import random
 from typing import Type
+from pyproj import Geod
 from models import Asset, Threat
 from models.weapon import Weapon
+
+# Initialize the WGS84 ellipsoid model
+geod = Geod(ellps="WGS84")
 
 
 class ScenarioGenerator:
@@ -9,55 +13,56 @@ class ScenarioGenerator:
         if seed is not None:
             random.seed(seed)
 
-    def generate_weapon_cluster(self, center_x: float, center_y: float, radius: float, amount: int, weapon_class: Type[Weapon]) -> list[Weapon]:
+    def generate_weapon_cluster(self, center_lat: float, center_lon: float, radius: float, amount: int,
+                                weapon_class: Type) -> list:
         cluster = []
         for i in range(amount):
-            offset_x = random.uniform(-radius, radius)
-            offset_y = random.uniform(-radius, radius)
+            # Random direction (0 to 360 degrees) and random distance in meters
+            azimuth = random.uniform(0, 360)
+            distance = random.uniform(0, radius)
+
+            # fwd calculates the new lon/lat given a starting point, direction, and distance
+            new_lon, new_lat, _ = geod.fwd(center_lon, center_lat, azimuth, distance)
 
             weapon = weapon_class(
-                x=center_x + offset_x,
-                y=center_y + offset_y,
+                lat=new_lat,
+                lon=new_lon,
                 name=f"{weapon_class.__name__}-{i}"
             )
-
             cluster.append(weapon)
-
         return cluster
 
-    def generate_asset_cluster(self, center_x: float, center_y: float, radius: float, amount: int, asset_class: Type[Asset]) -> list[Asset]:
-
+    def generate_asset_cluster(self, center_lat: float, center_lon: float, radius: float, amount: int,
+                               asset_class: Type[Asset]) -> list[Asset]:
         cluster = []
         for i in range(amount):
-            offset_x = random.uniform(-radius, radius)
-            offset_y = random.uniform(-radius, radius)
+            azimuth = random.uniform(0, 360)
+            distance = random.uniform(0, radius)
+            new_lon, new_lat, _ = geod.fwd(center_lon, center_lat, azimuth, distance)
 
             asset = asset_class(
-                x=center_x + offset_x,
-                y=center_y + offset_y,
+                lat=new_lat,
+                lon=new_lon,
                 name=f"{asset_class.__name__}-{i}"
             )
-
             cluster.append(asset)
-
         return cluster
 
-    def generate_threat_cluster(self, center_x: float, center_y: float, radius: float, amount: int, threat_class: Type[Threat], target_pool: list[Asset]) -> list[Threat]:
-
+    def generate_threat_cluster(self, center_lat: float, center_lon: float, radius: float, amount: int,
+                                threat_class: Type, target_pool: list[Asset]) -> list:
         cluster = []
         for i in range(amount):
-            offset_x = random.uniform(-radius, radius)
-            offset_y = random.uniform(-radius, radius)
+            azimuth = random.uniform(0, 360)
+            distance = random.uniform(0, radius)
+            new_lon, new_lat, _ = geod.fwd(center_lon, center_lat, azimuth, distance)
 
             assigned_target = random.choice(target_pool)
 
             threat = threat_class(
-                x=center_x + offset_x,
-                y=center_y + offset_y,
+                lat=new_lat,
+                lon=new_lon,
                 target=assigned_target,
                 name=f"{threat_class.__name__}-{i}"
             )
-
             cluster.append(threat)
-
         return cluster

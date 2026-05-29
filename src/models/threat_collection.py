@@ -3,10 +3,10 @@ from .asset import Asset
 
 class SHA(Threat):
     # HQ
-    def __init__(self, x: float, y: float, name: str, target: Asset):
+    def __init__(self, lat: float, lon: float, name: str, target: Asset):
         super().__init__(
             name=name,
-            x=x,
-            y=y,
+            lat=lat,
+            lon=lon,
             target=target
         )

@@ -1,5 +1,5 @@
 class Entity:
-    def __init__(self, name: str, x: float, y: float):
+    def __init__(self, name: str, lat: float, lon: float):
         self.name = name
-        self.x = x
-        self.y = y
+        self.lat = lat
+        self.lon = lon

@@ -1,7 +1,7 @@
 import time
-from typing import Dict
-from models import Weapon, Threat
-from scenario import Scenario
+import numpy as np
+from typing import List
+from .wta_model import WTAModel
 from .base import BaseSolver, SolverResult
 
 
@@ -9,45 +9,67 @@ class GreedyMMRSolver(BaseSolver):
     def __init__(self):
         super().__init__(name="Greedy MMR")
 
-    def solve(self, scenario: Scenario) -> SolverResult:
+    def solve(self, model: WTAModel) -> List[SolverResult]:
         start_time = time.time()
-        result = SolverResult()
 
-        weapon_capacities: Dict[Weapon, int] = {w: w.capacity for w in scenario.weapons}
-        threat_survival_probs: Dict[Threat, float] = {t: 1.0 for t in scenario.threats}
+        W = model.num_weapons
+        T = model.num_threats
 
+        # Decision init
+        X = np.zeros((W, T), dtype=int)
+
+        # Dynamic states
+        capacities = model.weapon_capacities.copy()
+        survival_probs = np.ones(T)
+
+        # Calculate threat values
+        threat_values = np.zeros(T)
+        for k, targeted_threats in model.target_map.items():
+            for j in targeted_threats:
+                threat_values[j] = model.asset_values[k]
+
+        # Greedy loop
         while True:
-            best_assignment = None
-            max_net_benefit = 0.0
+            best_i, best_j = -1, -1
+            max_marginal_return = 0.0  # Changed variable name for clarity
 
-            for w in scenario.weapons:
-                if weapon_capacities[w] <= 0:
+            for i in range(W):
+                if capacities[i] <= 0:
                     continue
 
-                for t in scenario.threats:
-                    if not w.is_in_range(t):
-                        continue
+                for j in range(T):
+                    kill_prob = model.kill_probs[i, j]
+                    if kill_prob == 0.0:
+                        continue  # Out of range
 
-                    expected_value_saved = t.value * threat_survival_probs[t] * w.kill_prob
-                    net_benefit = expected_value_saved - w.usage_cost
+                    expected_value_saved = threat_values[j] * survival_probs[j] * kill_prob
 
-                    if net_benefit > max_net_benefit:
-                        max_net_benefit = net_benefit
-                        best_assignment = (w, t)
+                    marginal_return = expected_value_saved / (model.weapon_costs[i] + 1e-9)
 
-            if best_assignment is None:
+                    if marginal_return > max_marginal_return:
+                        max_marginal_return = marginal_return
+                        best_i = i
+                        best_j = j
+
+            if best_i == -1 or max_marginal_return <= 0.0001:
                 break
 
-            best_weapon, best_threat = best_assignment
+            X[best_i, best_j] += 1
+            capacities[best_i] -= 1
+            survival_probs[best_j] *= (1.0 - model.kill_probs[best_i, best_j])
 
-            result.assignments.append((best_weapon, best_threat))
-            result.total_engagement_cost += best_weapon.usage_cost
+        # Stop the benchmark
+        execution_time = time.time() - start_time
 
-            weapon_capacities[best_weapon] -= 1
-            threat_survival_probs[best_threat] *= (1.0 - best_weapon.kill_prob)
+        # Get the results
+        final_cost = model.evaluate_engagement_cost(X)
+        final_loss = model.evaluate_expected_asset_loss(X)
 
-        for t in scenario.threats:
-            result.expected_asset_loss += (t.value * threat_survival_probs[t])
-
-        result.execution_time_seconds = time.time() - start_time
-        return result
+        # Return
+        return [SolverResult(
+            solver_name=self.name,
+            decision_matrix=X,
+            engagement_cost=final_cost,
+            expected_asset_loss=final_loss,
+            execution_time_s=execution_time
+        )]

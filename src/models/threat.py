@@ -3,8 +3,8 @@ from .asset import Asset
 
 
 class Threat(Entity):
-    def __init__(self, target: Asset, name: str, x: float, y: float):
-        super().__init__(name, x, y)
+    def __init__(self, target: Asset, name: str, lat: float, lon: float):
+        super().__init__(name, lat, lon)
         self.target = target
 
     @property
