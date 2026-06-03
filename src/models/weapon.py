@@ -16,6 +16,8 @@ class Weapon(Entity):
         self.capacity = capacity
 
     def is_in_range(self, target: Entity) -> bool:
+        # TODO: make the range abstraction neat
         # inv returns (forward_azimuth, back_azimuth, distance_in_meters)
-        _, _, distance_m = geod.inv(self.lon, self.lat, target.lon, target.lat)
-        return self.engage_range > distance_m
+        #_, _, distance_m = geod.inv(self.lon, self.lat, target.lon, target.lat)
+        #return self.engage_range > distance_m
+        return True

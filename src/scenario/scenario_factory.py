@@ -39,8 +39,8 @@ def build_odesa_scenario() -> Scenario:
 
 def build_parametric_scenario(target_drones: int, ammo_ratio: float, distribution: str, seed: int = 420) -> Scenario:
     """
-    Builds a scenario dynamically based on Chapter 3 parameters,
-    strictly utilizing the cluster-to-cluster API and expanded map anchors.
+    Builds a scenario dynamically based on  parameters,
+    strictly utilizing cluster-to-cluster API.
     """
     random.seed(seed)
 
