@@ -44,8 +44,8 @@ All solvers inherit from a base `Solver` class and implement the `solve(model)` 
 
 ### Running the Experiments
 The `src/main.py` script houses the test suites corresponding to the Research Questions (RQs) in the thesis:
-- run_rq_1(): Benchmarks execution latency across scaling swarm sizes (up to 1,000 threats)
-- run_rq_2(): Calculates the Hypervolume metrics of the objective space under varying scarcity constraints
-- run_rq_3(): Executes the "Informed Observer" model to calculate the Spearman's rank correlation and evaluate strategic obfuscation.
+- `run_rq_1()`: Benchmarks execution latency across scaling swarm sizes (up to 1,000 threats)
+- `run_rq_2()`: Calculates the Hypervolume metrics of the objective space under varying scarcity constraints
+- `run_rq_3()`: Executes the "Informed Observer" model to calculate the Spearman's rank correlation and evaluate strategic obfuscation.
 
 Before executing any of the `run_rq_*` functions, the `data/` folder needs to be manually created in the root of the project. 
