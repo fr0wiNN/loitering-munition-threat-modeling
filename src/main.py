@@ -5,12 +5,12 @@ from pymoo.indicators.hv import Hypervolume
 from visualization import plot_scenario, plot_pareto_comparison
 from scipy import stats
 from solvers import WTAModel, WeightedGreedyMMRSolver, NSGAIISolver, RandomSolver
-from scenario import build_parametric_scenario
+from scenario import build_parametric_scenario, build_odesa_scenario
 
 def run_demo():
 
     # === INITIALIZE SCENARIO ===
-    scenario = build_parametric_scenario(50, 0.25, "Uniform")
+    scenario = build_parametric_scenario(100, 0.25, "Uniform")
 
     plot_scenario(scenario, display_range=False)
 
@@ -22,11 +22,11 @@ def run_demo():
 
     # === CONFIGURE SOLVERS ===
     configs = {
-        "Fast GA (100x200)": NSGAIISolver(pop_size=20, n_gen=20, seed=420),
-        "Medium GA (50x50)": NSGAIISolver(pop_size=50, n_gen=50, seed=420),
-        "Heavy GA (100x200)": NSGAIISolver(pop_size=100, n_gen=200, seed=420),
-        "Greedy": WeightedGreedyMMRSolver([0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]),
-        "Random": RandomSolver(100*200)
+        "Fast GA (100x200)": NSGAIISolver(pop_size=50, n_gen=300, seed=420),
+        "Medium GA (50x50)": NSGAIISolver(pop_size=100, n_gen=400, seed=420),
+        "Heavy GA (100x200)": NSGAIISolver(pop_size=200, n_gen=500, seed=420),
+        #"Greedy": WeightedGreedyMMRSolver([0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]),
+        #"Random": RandomSolver(100*200)
     }
 
     # === RUN EXPERIMENTS ===
